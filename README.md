@@ -8,6 +8,7 @@ Get it on Crome Web Store or try online.
 
 **Web UI**
 To see the code in action, just start a local server and point it the code directory.
+Online demo: http://sunnygoyal.github.io/jade/
 
 **Chrome Plugin**
 
