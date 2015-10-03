@@ -1,6 +1,6 @@
 # JAvascript based Database Editor
 *A web based GUI client for SQLite.*
-Get it on Crome Web Store or try online.
+Get it on [Crome Web Store](https://chrome.google.com/webstore/detail/jade/bponbdjkefbmgkfiiphhabghkkfocook) or [try online demo](http://sunnygoyal.github.io/jade/).
 
 ----------
 
@@ -8,7 +8,6 @@ Get it on Crome Web Store or try online.
 
 **Web UI**
 To see the code in action, just start a local server and point it the code directory.
-Online demo: http://sunnygoyal.github.io/jade/
 
 **Chrome Plugin**
 
