@@ -12,7 +12,7 @@
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png"
   },
-  "manifest_version": 2, // Required
+  "manifest_version": 2,
   "name": "JADE",
   "permissions": [ "storage", {"fileSystem": ["write"]}],
   "version": "1"
