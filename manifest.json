@@ -5,7 +5,7 @@
     }
   },
   "default_locale": "en",
-  "description": "JAvascript based Database Editor",
+  "description": "A GUI client for local SQLite databases",
   "icons": {
     "256": "icons/icon-256.png",
     "128": "icons/icon-128.png",
@@ -13,7 +13,8 @@
     "32": "icons/icon-32.png"
   },
   "manifest_version": 2,
-  "name": "JADE",
+  "name": "JAvascript based Database Editor",
+  "short_name": "JADE",
   "permissions": [ "storage", {"fileSystem": ["write"]}],
-  "version": "1"
+  "version": "1.1"
 }
