@@ -1,0 +1,69 @@
+/*
+ * Simplified set of rules for the WHERE clause in SQLite statements.
+ * This allows for validating the search query before actually sending them to SQLite.
+ */
+
+start = expr whitespace
+
+value = ( whitespace ( literal_value / name / ( unary_operator expr ) / ( whitespace lparen expr whitespace rparen ) ) )
+
+expr =
+  e: ( whitespace
+       ( ( value binary_operator expr )
+       / ( value  NOT ? whitespace1 ( LIKE / REGEXP / MATCH ) expr )
+       / ( value ( ISNULL / NOTNULL / ( NOT NULL ) ) )
+       / ( value whitespace1 IS NOT ? expr )
+       / ( value NOT ? BETWEEN expr whitespace1 AND expr )
+       / ( value NOT ? whitespace1 IN ( lparen ( ( expr comma )+ )? rparen ) )
+       / value ) )
+
+literal_value = ( numeric_literal / string_literal / string_literal2 / NULL )
+
+numeric_literal = ( ( ( ( digit )+ ( decimal_point ( digit )+ )? ) / ( decimal_point ( digit )+ ) ) ) {return "number"}
+
+whitespace = [ \t\n\r]*
+whitespace1 = [ \t\n\r]+
+
+unary_operator = ( whitespace ( '-' / '+' / '~' / NOT_NOCASE) )
+
+binary_operator =
+  ( whitespace
+       ('||'
+        / '*' / '/' / '%'
+        / '+' / '-'
+        / '<<' / '>>' / '&' / '|'
+        / '<=' / '>='
+        / '<' / '>'
+        / '=' / '==' / '!=' / '<>'
+        / IS NOT ? / IN / LIKE / MATCH / REGEXP
+        / AND
+        / [oO][rR]) )
+  { return "op" }
+
+digit = [0-9]
+decimal_point = dot
+equal = '='
+
+name = [A-Za-z0-9_]+ {return "name"}
+
+dot = '.'
+comma = ','
+lparen = '('
+rparen = ')'
+string_literal = '"' [^"]* '"' {return "str"}
+string_literal2 = "'" [^']* "'" {return "str"}
+
+AND = [aA][nN][dD] {return 0}
+IS = [iI][sS] {return 3}
+REGEXP = [rR][eE][gG][eE][xX][pX] {return 0}
+LIKE = [lL][iI][kK][eE] {return 0}
+MATCH = [mM][aA][tT][cC][hH] {return 0}
+IN = [iI][nN] {return 3}
+NOT_NOCASE = [nN][oO][tT] {return 0}
+
+NOT = whitespace1 NOT_NOCASE {return 0}
+
+NOTNULL = whitespace1 [nN][oO][tT][nN][uU][lL][lL] {return 1}
+NULL = whitespace1 [nN][uU][lL][lL] {return 2}
+BETWEEN = whitespace1 [bB][eE][tT][wW][eE][eE][nN] {return 0}
+ISNULL = whitespace1 [iI][sS][nN][oO][tT] {return 0}

@@ -1,0 +1,127 @@
+/*
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.popup-menu {
+  margin: 0;
+  display: none;
+  box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+  cursor: default;
+  outline: none;
+}
+
+ul.popup-menu {
+  z-index: 5000;
+  background-color: #fff;
+  padding: 16px 0;
+  top: -16px;
+}
+
+ul.popup-menu li.separator {
+  border-top: 1px solid #ebebeb;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+ul.popup-menu li span {
+  cursor: default;
+  padding: 0 20px;
+  font-size: 15px;
+  line-height: 40px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+ul.popup-menu li {
+  display: block;
+  overflow: visible;
+  transition: background 200ms;
+  position: relative;
+}
+ul.popup-menu li:not(.separator):hover {
+  background: rgba(0, 0, 0, .08);
+}
+ul.popup-menu li.selected {
+  background: rgba(0, 0, 0, .12);
+}
+
+ul.popup-menu li.has-sub-popup > span:before {
+  content: '\25BA';
+  float: right;
+  font-size: 11px;
+}
+
+/* Compo popup */
+ul.combo_popup {
+  position: fixed;
+  top: calc(2rem + 10px);
+  overflow-y: auto;
+}
+
+/* Popup menu */
+ul.abs_popup {
+  min-width: 200px;
+  max-height: 650px;
+  position: absolute;
+}
+
+ul.abs_popup.has_scroll {
+  overflow-y: auto;
+}
+
+
+/* Select box */
+.combo-box {
+  position: relative;
+  padding-right: 25px !important;
+}
+
+.combo-box span:before {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 25px;
+  cursor: pointer;
+  content: '\25BC';
+  color: #000;
+  text-align: center;
+  line-height: 2rem;
+  height: 2rem;
+  font-size: 10px;
+  transition: all .3s;
+}
+
+.combo-box input:not([readonly]) {
+  padding-right: 25px;
+}
+.combo-box input[readonly] {
+  padding-right: 5px;
+  padding-left: 20px;
+}
+
+.combo-box input:focus + span:before {
+  color: #26a69a;
+  text-shadow: 0 1px #26a69a;
+}
+.combo-box input:focus {
+  border-bottom: 1px solid #26a69a;
+  box-shadow: 0 1px 0 0 #26a69a;
+}
+.combo-box input:disabled + span:before {
+  color: rgba(0, 0, 0, 0.26);
+  cursor: default;
+}

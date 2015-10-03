@@ -1,0 +1,363 @@
+/*
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.table-container {
+  overflow: auto;
+}
+
+.table-container .header {
+  position: absolute;
+  z-index: 10;
+  border-bottom: 1px solid #f2f2f2;
+  background: #fff;
+  height: 56px;
+}
+
+/* Fix to hide the shadow on the side */
+.table-container .header:after {
+  content: ' ';
+  position: absolute;
+  right: -10px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: #FFF;
+}
+
+.table-container .header label {
+  position: relative;
+  line-height: 56px;
+  padding: 0 5px 0 16px;
+  min-width: 40px;
+  font-size: 1rem;
+  width: 80px;
+  color: rgba(0, 0, 0, .54);
+  font-weight: 500;
+  cursor: default;
+  height: 56px;
+  display: inline-block;
+}
+
+.table-body {
+  padding-top: 56px;
+  display: inline-block;
+}
+
+.table-body > div, .table-container .header {
+  white-space: nowrap;
+  line-height: 0;
+}
+
+.table-body > div {
+  transition: background-color .25s ease;
+  border-bottom: 1px solid #f2f2f2;
+  -webkit-user-select: none;
+}
+.table-body > div:last-child {
+  border-bottom: none;
+}
+
+.table-body > div:hover {
+  background-color: #F5F5F5;
+}
+
+.table-body > div.active {
+  background-color: #EEEEEE;
+}
+
+
+.table-body span {
+  min-width: 45px;
+  width: 85px;
+  border-right: 5px solid transparent;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 5px 0 16px;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, .87);
+  cursor: default;
+}
+.table-body span:last-child {
+  border: none;
+  width: 78px;
+}
+
+.table-container .header span, resizeend, .table-body span {
+  box-sizing: border-box;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-container .header span {
+  display: block;
+}
+
+span.no-display-value {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/** *********** Column resizing  ************* **/
+resizeend {
+  position: relative;
+  width: 5px;
+  cursor: e-resize;
+  -webkit-user-select: none;
+  line-height: 56px;
+}
+
+resizeend:before {
+  content: " ";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 2px;
+  right: 2px;
+  background: #ddd;
+  box-shadow: 1px 1px 2px #f2f2f2;
+}
+
+resizeend:after {
+  content: " ";
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 0px;
+  right: 0px;
+  background: #2196f3;
+  opacity: 0;
+}
+
+resizeend:hover:before, resizeend.active:before {
+  opacity: 0;
+}
+resizeend:hover:after, resizeend.active:after {
+  opacity: 1;
+}
+
+resizebar {
+  position: absolute;
+  left: 0;
+  top: 15px;
+  bottom: 0;
+  width: 1px;
+  background: #2196f3;
+  z-index: 20;
+}
+
+/** *********** Column extra menu  ************* **/
+column-menu-button {
+  position: absolute;
+  right: 5px;
+  top: 21px;
+  height: 14px;
+  width: 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 100ms;
+  border-radius: 1px;
+}
+
+label:hover > column-menu-button {
+  opacity: 1;
+}
+
+column-menu-button:hover, column-menu-button:active, column-menu-button.active {
+  opacity: 1;
+  border: 1px solid #333;
+}
+
+column-menu-button:before {
+  content : '\25BC';
+  position: absolute;
+  left: 0;
+  width: 12px;
+  top: 0;
+  line-height: 14px;
+  text-align: center;
+  font-size: 7px;
+  color: #bbb;
+  transition: all 100ms;
+}
+
+column-menu-button:hover:before {
+  color: #333;
+}
+
+column-menu-button:active, column-menu-button.active {
+  background: #333;
+}
+column-menu-button:active:before, column-menu-button.active:before{
+  color: #f2f2f2;
+}
+
+.column-hidden, .column-hidden + resizeend {
+  display: none !important;
+}
+
+
+column-expand-button {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 40px;
+  height: 20px;
+  background: #FFF;
+  transform: translateX(-23px);
+  z-index: 15;
+  border: 1px solid #E0E0E0;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #BDBDBD;
+}
+
+column-expand-button:before, column-expand-button:after {
+  position: absolute;
+  top:0;
+  line-height: 20px;
+  font-size: 12px;
+  width: 15px;
+  text-align: center;
+}
+
+column-expand-button:after {
+  right: 0;
+  content: '\25B6';
+}
+column-expand-button:before {
+  left: 0;
+  content: '\25C0';
+}
+
+column-expand-button:hover {
+  color: #424242;
+  border-color: #424242;
+}
+column-expand-button:active {
+  color: #2196f3;
+  border-color: #2196f3;
+}
+
+.active column-expand-button {
+  display: none;
+}
+
+/** *********** Cell edit dialog  ************* **/
+#daragrid_dialog {
+  z-index: 1000;
+  left: auto;
+  right: auto;
+  width: 350px;
+}
+
+#daragrid_dialog.has-blob:not(.allow-edit) {
+  width: 250px;
+}
+
+#daragrid_dialog .modal-content {
+  position: relative;
+  z-index: 1;
+  background: rgba(250,250,250,0.5);
+}
+
+#daragrid_dialog:not(.allow-edit) .modal-content {
+  min-height: 150px;
+}
+
+#daragrid_dialog textarea {
+  padding: 0 0 10px 0;
+  min-height: 0;
+  height: 22px;
+  transition: none;
+  max-height: 80px;
+  overflow: auto;
+}
+
+#daragrid_dialog_blob {
+  font-size: 16px;
+  display: inline-block;
+  margin-right: 15px;
+  color: #333333;
+  text-shadow: 0 0 5px #fafafa;
+}
+
+#daragrid_dialog_download {
+  float: right;
+  display: none;
+}
+
+/** Show footer in edit mode **/
+#daragrid_dialog .modal-footer {
+  display: none;
+  background: rgba(250,250,250,0.5);
+  z-index: 2;
+  position: relative;
+}
+#daragrid_dialog.allow-edit .modal-footer {
+  display: block;
+}
+
+/** Only show blob bar when there is blob and not in edit mode **/
+#daragrid_dialog_blob {
+  display: none;
+}
+#daragrid_dialog.has-blob:not(.allow-edit) #daragrid_dialog_blob {
+  display: block;
+}
+#daragrid_dialog.has-blob:not(.allow-edit) #daragrid_cell_text {
+  display: none;
+}
+
+#daragrid_dialog.has-blob #daragrid_dialog_download {
+  display: block;
+}
+
+#daragrid_dialog_upload, #daragrid_dialog_delete {
+  float: left;
+  margin-right: 10px;
+}
+
+#daragrid_dialog_upload {
+  position: relative;
+}
+
+#daragrid_dialog_upload input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+#daragrid_dialog_upload a {
+  color: #343434;
+  line-height: 36px;
+}
+
+#daragrid_dialog img {
+  max-width: 80%;
+  max-height: 80%;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}

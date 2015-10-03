@@ -1,0 +1,157 @@
+/*
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+body {
+  overflow: hidden;
+  background: #f2f2f2;
+  font-family: "Roboto";
+  font-size: 100%;
+}
+
+/** ************* Main content ***********/
+#contentMain {
+  position: absolute;
+  top: 0px;
+  left: 260px;
+  right: 10px;
+  bottom: 0px;
+}
+
+.contentTab {
+  display: none;
+}
+
+.contentTab .card-title {
+  margin: 16px;
+  display: block;
+  font-weight: normal;
+  font-size: 20px;
+  color: rgba(0,0,0,.87);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/** ************* Button bar ***********/
+.buttonbar {
+  float: right;
+  margin: 10px 20px;
+  white-space: nowrap;
+}
+
+.buttonbar .selection-wrapper {
+  display: inline-block;
+  margin-right: 10px;
+  padding-right: 10px;
+  position: relative;
+}
+
+.buttonbar .selection-wrapper:after {
+  content: " ";
+  position: absolute;
+  top: 8px;
+  height: 18px;
+  right: 0;
+  width: 1px;
+  background: #ccc;
+  box-shadow: 1px 1px 2px #f2f2f2;
+}
+
+/** ************* Material overrides ***********/
+
+h4 {
+  font-size: 20px;
+}
+
+.icon_button {
+  text-transform: none;
+  padding: 0 1rem;
+}
+
+.icon_button:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* Allow toast to be shown above modal dialogs and at the bottom */
+#toast-container {
+  z-index: 2000;
+}
+@media only screen and (min-width : 993px) {
+  #toast-container {
+    top: 20%;
+  }
+}
+
+.modal-action:not(.disabled) {
+  color: #757575;
+}
+.modal-action.primary:not(.disabled) {
+  color: #2196F3;
+}
+
+/** ************* Confirmation dialog ***********/
+#dialog_confirmation {
+  right: auto;
+  left: 50%;
+  margin-left: -160px;
+  width: 320px;
+  top: 30% !important;
+}
+
+#dialog_confirmation .modal-content {
+  padding-bottom: 0;
+  color: rgba(0, 0, 0, .57);
+}
+#dialog_confirmation .modal-action {
+  padding: 0 1.5rem;
+}
+
+
+/** ************* DB Settings ***********/
+
+#db_settings table {
+  width: auto;
+}
+
+#db_settings td:first-child {
+  text-align: right;
+  padding: 0 10px;
+  line-height: 40px;
+  font-size: 0.9rem;
+  color: #757575;
+}
+
+#db_settings td:last-child {
+  padding: 0 4px 0 25px;
+  max-width: 30%;
+  height: 40px;
+}
+#db_settings td[colspan="2"] {
+  font-weight: bold;
+  vertical-align: bottom;
+  line-height: inherit;
+  padding-top: 20px;
+  color: #333;
+}
+
+#db_settings input[type='text'], #db_settings input[type='number'] {
+  margin:0;
+  height: 2rem;
+  padding-left: 20px;
+}
+#db_settings td:last-child:not(.combo-box) {
+  padding-right: 21px !important;
+}

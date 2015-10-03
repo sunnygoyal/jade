@@ -1,0 +1,21 @@
+{
+  "name": "chrome-sqlite",
+  "version": "0.0.0",
+  "authors": [
+    "Sunny Goyal <sunny.painless@gmail.com>"
+  ],
+  "description": "Sqlite client for chrome",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "master",
+    "sql.js": "https://github.com/sunnygoyal/sql.js.git",
+    "codemirror": "https://github.com/codemirror/CodeMirror.git#~5.5.0"
+  }
+}

@@ -1,0 +1,115 @@
+/*
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+#add_entry_dialog textarea {
+  padding: 0 0 5px 0;
+  min-height: 0;
+  height: 22px;
+  line-height: 22px;
+  margin-top: 5px;
+}
+
+
+#add_entry_dialog textarea::-webkit-input-placeholder {
+  color: #aaa;
+}
+
+
+#add_entry_dialog .row {
+  margin-bottom: 0;
+}
+
+#add_entry_dialog .upload_button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#add_entry_dialog .upload_button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+#add_entry_dialog .upload_button a {
+  color: #343434;
+  line-height: 36px;
+}
+
+#add_entry_dialog .delete_button {
+  position: absolute;
+  top: 0;
+  right: 60px;
+}
+
+#add_entry_dialog .row .icon_button{
+  opacity: 0.6;
+}
+
+#add_entry_dialog .row.long_text .icon_button {
+  opacity: 0.1;
+}
+
+#add_entry_dialog .row .icon_button:hover {
+  opacity: 1;
+}
+
+
+
+
+/* Add Table */
+#add_table_dialog {
+  width: 80%;
+}
+
+#columnTableHead td {
+  font-size: 1rem;
+  color: rgba(0, 0, 0, .54);
+  font-weight: 500;
+  cursor: default;
+  height: 56px;
+  vertical-align: middle;
+  padding: 0 5px;
+  text-align: center;
+}
+
+#columnTableHead {
+  background: #fafafa;
+  position: relative;
+  z-index: 10;
+}
+
+#columnTable td {
+  padding: 5px 4px;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+#columnTable input[type='text'] {
+  margin:0;
+  height: 2rem;
+}
+
+#columnTable label {
+  padding: 0;
+  transform: translateX(-10px) translateY(8px);
+}

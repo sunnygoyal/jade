@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>JAvascript based Database Editor</title>
+    <link rel="icon" type="image/png" href="icons/icon-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="icons/icon-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="icons/icon-256.png" sizes="256x256">
+
+    <!-- JQuery -->
+    <script src="third_party/jquery/jquery.min.js"></script>
+
+    <!-- Codemirror -->
+    <link href="third_party/codemirror/codemirror.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="third_party/codemirror/codemirror-compressed.js"></script>
+
+    <!-- Material design -->
+    <link href="third_party/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="third_party/materialize/js/materialize.min.js"></script>
+    <!-- remove-on-compile --> <link href="css/material-icons.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- Material popups -->
+    <!-- remove-on-compile --> <link href="components/popup/popup.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <script src="components/popup/popup.js"></script>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- Data grid -->
+    <!-- remove-on-compile --> <link href="components/datagrid/datagrid.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <script src="components/datagrid/datagrid.js"></script>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- SQL entity (tables/views/indexes/triggers) properties -->
+    <!-- remove-on-compile --> <link href="components/sql_properties/property_manager.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <script src="components/sql_properties/property_manager.js"></script>
+    <!-- remove-on-compile --> <script src="components/sql_properties/sql_index.js"></script>
+    <!-- remove-on-compile --> <script src="components/sql_properties/sql_trigger.js"></script>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- SQL tables and views -->
+    <!-- remove-on-compile --> <link href="components/sql_tables/table_manager.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <link href="components/sql_tables/sql_table.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <script src="components/sql_tables/table_manager.js"></script>
+    <!-- remove-on-compile --> <script src="components/sql_tables/sql_table.js"></script>
+    <!-- remove-on-compile --> <script src="components/sql_tables/sql_view.js"></script>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- Run SQL -->
+    <!-- remove-on-compile --> <link href="components/runsql/run_sql.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <script src="components/runsql/runsql.js"></script>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <!-- App UI  -->
+    <!-- remove-on-compile --> <link href="css/logo.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile --> <link href="css/sidebar.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- remove-on-compile -->
+    <!-- remove-on-compile --> <script src="js/sql.interface.js"></script>
+    <!-- remove-on-compile --> <script src="js/dbsettings.js"></script>
+    <!-- remove-on-compile --> <script src="js/fileio.js"></script>
+    <!-- remove-on-compile --> <script src="js/i18n.js"></script>
+    <!-- remove-on-compile --> <script src="js/app.js"></script>
+
+    <!-- remove-on-compile
+    <link href="deps/app.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="deps/app.js"></script>
+    remove-on-compile -->
+  </head>
+  <body>
+
+    <div id="logo">
+      <div class="logo-j"></div>
+      <div class="logo-a"></div>
+      <div class="logo-d"></div>
+      <div class="logo-e"><span/></div>
+    </div>
+    <div id="size-menu">
+      <a class="waves-effect material-icons btn-flat icon_button right" id="app_more_options">more_vert</a>
+      <a class="waves-effect material-icons btn-flat tooltipped icon_button right" data-position="bottom" data-tooltip="Save DB" id="save-db" i18n-id="menu_save_db" i18n-attr="data-tooltip">save</a>
+      <label>Untitled.db</label>
+    </div>
+    <div class="sidebar">
+      <div class="separator">
+        <a class="waves-effect head" id="btnRunSql"><i class="material-icons small left">play_circle_filled</i> <span i18n-id="btn_run_sql">Run SQL</span></a>
+      </div>
+      <div class="head" i18n-id="title_tables">Tables</div>
+      <div class="db_entries"></div>
+      <div class="separator db_entries">
+            <a class="waves-effect" id="btn_add_table"><i class="material-icons small left">add</i><span i18n-id="btn_new_table">New table&hellip;</span></a>
+      </div>
+
+      <div class="head" i18n-id="title_views">Views</div>
+      <div class="separator db_entries"></div>
+
+      <div class="head" i18n-id="title_indexes">Indexes</div>
+      <div class="separator db_entries"></div>
+
+      <div class="head" i18n-id="title_triggers">Triggers</div>
+      <div class="db_entries"></div>
+
+    </div>
+
+    <div id="contentMain">
+      <!-- ----------- Run SQL ----------------- -->
+      <div id="contentRunSql" class="contentTab">
+        <div class="card" id="cardSqlInput">
+          <textarea id="contentCodeMirror" name="contentCodeMirror" placeholder="Enter SQL here..." i18n-id="placeholder_sql" i18n-attr="placeholder"></textarea>
+          <a class="waves-effect waves-light orange darken-1 btn" id="btnExecuteSql" i18n-id="btn_run_sql">Run SQL</a>
+          <a class="waves-effect waves-orange btn-flat" id="btnSqlTemplates" i18n-id="btn_templates">Templates</a>
+        </div>
+        <div class="card table-container" id="cardSqlResult" style="display:none"></div>
+      </div>
+
+      <!-- ----------- Browse table | Used for tables and views ----------------- -->
+      <div id="contentTable" class="contentTab card">
+        <div class="buttonbar">
+          <div class="selection-wrapper">
+            <a class="waves-effect material-icons btn-flat icon_button tooltipped" i18n-id="btn_delete_row" i18n-attr="data-tooltip" data-tooltip="Delete row" id="table_delete_entry">delete</a>
+            <a class="waves-effect material-icons btn-flat icon_button tooltipped" i18n-id="btn_duplicate_row" i18n-attr="data-tooltip" data-tooltip="Duplicate row" id="table_copy_entry">content_copy</a>
+          </div>
+          <div class="selection-wrapper">
+            <a class="waves-effect material-icons btn-flat icon_button tooltipped" i18n-id="btn_add_row" i18n-attr="data-tooltip" data-tooltip="Add Entry" id="table_add_entry">add</a>
+          </div>
+          <a class="waves-effect material-icons btn-flat icon_button tooltipped" i18n-id="btn_properties" i18n-attr="data-tooltip" data-tooltip="Properties" id="btnTableProperties">settings</a>
+
+          <div class="search-input-field">
+            <input id="search_table" type="text" placeholder="Search table" i18n-id="placeholder_search_table" i18n-attr="placeholder">
+            <i class="material-icons">search</i>
+          </div>
+        </div>
+        <span class="card-title"></span>
+        <div class="table-container"></div>
+      </div>
+
+      <!-- ----------- Properties view | Used for tables, views, indexes and triggers ----------------- -->
+      <div id="propertyContent" class="contentTab">
+        <div class="card" id="propertySql">
+          <div class="buttonbar">
+            <a class="waves-effect material-icons btn-flat icon_button tooltipped" i18n-id="btn_delete" i18n-attr="data-tooltip" data-tooltip="Delete" id="btn_property_delete">delete</a>
+          </div>
+          <span class="card-title"></span>
+          <textarea id="propertyCodeMirror" name="propertyCodeMirror" readonly></textarea>
+        </div>
+        <div class="card" id="propertyColumns">
+            <span class="card-title" i18n-id="title_property_structure">Columns / fields</span>
+          <div class="table-container"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ------------- Dialogs and prompt ----------- -->
+
+    <!-- Dialog for view/edit table values -->
+    <div id="daragrid_dialog" class="modal popup-menu">
+      <img />
+      <div class="modal-content">
+        <a class="waves-effect material-icons btn-flat tooltipped icon_button" i18n-id="btn_download_blob" i18n-attr="data-tooltip" data-position="top" data-tooltip="Download blob" id="daragrid_dialog_download">save</a>
+        <h4></h4>
+
+        <textarea id="daragrid_cell_text" class="materialize-textarea" ></textarea>
+        <label id="daragrid_dialog_blob"></label>
+      </div>
+      <div class="modal-footer">
+        <div id="daragrid_dialog_upload" class="waves-effect btn-flat waves-teal tooltipped icon_button" i18n-id="btn_upload_blob" i18n-attr="data-tooltip" data-position="top" data-tooltip="Upload Blob">
+          <a class="material-icons">file_upload</a>
+        </div>
+
+        <a class="waves-effect material-icons btn-flat waves-teal tooltipped icon_button" i18n-id="btn_set_null" i18n-attr="data-tooltip" data-position="top" data-tooltip="Set NULL" id="daragrid_dialog_delete">delete</a>
+        <a class="waves-effect waves-light btn blue" id="daragrid_dialog_save" i18n-id="btn_update">Update</a>
+      </div>
+    </div>
+
+    <!-- Dialog for adding table value -->
+    <div id="add_entry_dialog" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4 i18n-id="btn_add_value">Add value</h4>
+        <form class="col s12">
+
+          <div class="row column_entry">
+            <div class="row input-field col s12">
+              <textarea class="materialize-textarea" placeholder="Placeholder"></textarea>
+              <label>Column Name</label>
+
+              <div class="waves-effect btn-flat waves-teal tooltipped icon_button upload_button" i18n-id="btn_upload_blob" i18n-attr="data-tooltip" data-position="top" data-tooltip="Upload Blob">
+                <input type="file" />
+                <a class="material-icons">file_upload</a>
+              </div>
+
+              <a class="waves-effect material-icons btn-flat waves-teal tooltipped icon_button delete_button" i18n-id="btn_set_default" i18n-attr="data-tooltip" data-position="top" data-tooltip="Set default">delete</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action waves-effect btn-flat primary" id="add_entry_accept" i18n-id="btn_add_row">Add entry</a>
+        <a class="modal-action modal-close waves-effect btn-flat" i18n-id="btn_cancel">Cancel</a>
+      </div>
+    </div>
+
+    <!-- Dialog for adding new table -->
+    <div id="add_table_dialog" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4 i18n-id="title_new_table">New table</h4>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="add_table_name" type="text">
+              <label for="add_table_name" i18n-id="title_table_name">Table name</label>
+            </div>
+            <div class="input-field col s3">
+              <input type="checkbox" class="filled-in" id="chkTmpTable"/>
+              <label for="chkTmpTable" i18n-id="chk_temporary">Temporary</label>
+            </div>
+            <div class="input-field col s3">
+              <input type="checkbox" class="filled-in" id="chkIfNotExist" />
+              <label for="chkIfNotExist" i18n-id="chk_if_not_exists">If not exists</label>
+            </div>
+          </div>
+        </form>
+
+        <div>
+          <table id="columnTableHead">
+            <tr>
+              <td width="20%" i18n-id="title_column_name">Column name</td>
+              <td width="20%" i18n-id="title_data_type">Data Type</td>
+              <td width="10%" i18n-id="chk_primary_key">Primary key?</td>
+              <td width="10%" i18n-id="chk_auto_inc">Auto Inc</td>
+              <td width="10%" i18n-id="chk_allow_null">Allow null?</td>
+              <td width="10%" i18n-id="chk_unique">Unique</td>
+              <td width="20%" i18n-id="title_default_value">Default value</td>
+            </tr>
+          </table>
+        </div>
+        <table id="columnTable">
+          <tbody>
+            <tr>
+              <td width="20%"><input type="text"></td>
+              <td width="20%" class="combo-box"><input type="text"><span/></td>
+              <td width="10%"><input type="checkbox" class="filled-in"/><label></label></td>
+              <td width="10%"><input type="checkbox" class="filled-in" disabled/><label></label></td>
+              <td width="10%"><input type="checkbox" class="filled-in" checked/><label></label></td>
+              <td width="10%"><input type="checkbox" class="filled-in"/><label></label></td>
+              <td width="20%" class="combo-box"><input type="text"><span/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action waves-effect btn-flat" style="float:left" id="add_table_new_column" i18n-id="btn_add_column">Add column</a>
+        <a class="modal-action waves-effect btn-flat primary" id="add_table_accept" i18n-id="btn_add_table">Add table</a>
+        <a class="modal-action modal-close waves-effect btn-flat" i18n-id="btn_cancel">Cancel</a>
+      </div>
+    </div>
+
+    <!-- Dialog for DB settings -->
+    <div id="db_settings" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4 i18n-id="title_db_properties">DB Properties</h4>
+        <table><tbody/></table>
+
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action waves-effect btn-flat primary disabled" id="accept_db_settings" i18n-id="btn_update">Update</a>
+        <a class="modal-action modal-close waves-effect btn-flat" i18n-id="btn_cancel">Cancel</a>
+      </div>
+    </div>
+
+    <!-- Dialog for importing SQL -->
+    <div id="import_sql" class="modal" style="max-width:500px">
+      <div class="modal-content" style="height:auto">
+        <h4 i18n-id="title_import_sql">Import SQL</h4>
+        <p>
+          <input type="checkbox" id="chkTransaction" class="filled-in" /><label for="chkTransaction" style="color: #5a5a5a;display:block;margin-bottom: 5px;" i18n-id="chk_use_transaction"></label>
+          <font color="#9e9e9e" i18n-id="desc_use_transaction"></font>
+        </p>
+        <div class="progress" style="margin-top: 40px;">
+            <div class="determinate" style="width: 70%"></div>
+        </div>
+        <b></b><pre></pre>
+
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action waves-effect btn-flat primary" id="start_sql_import" i18n-id="btn_import">Import</a>
+        <a class="modal-action modal-close waves-effect btn-flat" id="btn_cancel_import" i18n-id="btn_close">Close</a>
+      </div>
+    </div>
+
+    <!-- Dialog for any generic confirmation -->
+    <div id="dialog_confirmation" class="modal">
+      <div class="modal-content">
+        <p>Delete table row?</p>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect btn-flat primary" id="dialog_confirmation_accept">Delete</a>
+        <a class="modal-action modal-close waves-effect btn-flat" i18n-id="btn_cancel">Cancel</a>
+      </div>
+    </div>
+
+  </body>
+</html>
