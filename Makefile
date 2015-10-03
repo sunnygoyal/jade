@@ -62,7 +62,7 @@ $(eval $(call CONCAT_CSS, out/deps/app.css, css/*.css components/*/*.css))
 extension: out/extension.zip
 
 out/extension.zip: web_ui out/manifest.json out/background.js
-	cd out && zip -r extension.zip manifest.json background.js deps third_party icons worker _locales
+	cd out && zip -r extension.zip manifest.json background.js index.html deps third_party icons worker _locales
 
 $(eval $(call CONCAT_FILES, out/manifest.json, manifest.json))
 $(eval $(call COMPILE_JS, out/background.js, background.js))
