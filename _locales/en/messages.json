@@ -12,6 +12,7 @@
   "title_triggers": {"message": "Triggers"},
 
   "btn_run_sql": {"message": "Run SQL"},
+  "btn_save_sql": {"message": "Save Result as CSV"},
   "placeholder_sql": {"message": "Enter SQL here..."},
   "btn_templates": {"message": "Templates"},
 
