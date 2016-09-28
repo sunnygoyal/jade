@@ -87,7 +87,7 @@ var handleCommand = function(data) {
     case "export" : {
       return exportData(data);
     }
-	case "exportResult" : {
+    case "exportResult" : {
       return exportResult(data);
     }
     case "exportDB" : {
@@ -212,36 +212,36 @@ var exportData = function(args) {
 
 var exportResult = function(args) {
 	
-    var sqlResult = db.exec(args.sqlCommand)[0];
-	var entries = sqlResult.values;
-	var columns = sqlResult.columns;
+  var sqlResult = db.exec(args.sqlCommand)[0];
+  var entries = sqlResult.values;
+  var columns = sqlResult.columns;
 
-	var csvContent = "";
+  var csvContent = "";
 	
-	if (args.saveColumns) {		
-		csvContent += columns + "\n";
-	}
+  if (args.saveColumns) {		
+    csvContent += columns + "\n";
+  }
 	
-	for (var i of entries) {
-		for (var j of i) {
-			if (!isNaN(j)) {
-				csvContent += j;
-				if (i.indexOf(j) != (i.length - 1)) {
-					csvContent += ",";
-				}
-			} else {
-				csvContent += "\"" + j + "\"";
-				if (i.indexOf(j) != (i.length - 1)) {
-					csvContent += ",";
-				}
-			}
-		}
+  for (var i of entries) {
+    for (var j of i) {
+      if (!isNaN(j)) {
+        csvContent += j;
+        if (i.indexOf(j) != (i.length - 1)) {
+          csvContent += ",";
+        }
+      } else {
+        csvContent += "\"" + j + "\"";
+        if (i.indexOf(j) != (i.length - 1)) {
+          csvContent += ",";
+        }
+      }
+    }
 		
-		csvContent += "\n";
-	}
+    csvContent += "\n";
+  }
 	
-	var data = new Blob([csvContent], {type: 'data:text/csv'});
-	return {blob: data};
+  var data = new Blob([csvContent], {type: 'data:text/csv'});
+  return {blob: data};
 }
 
 var exportDataMapper = function(v) {

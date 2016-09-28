@@ -40,13 +40,13 @@ var RunSql = (function() {
   }
   
   var saveResult = function() {
-	var cmd = {
-        action: "exportResult",
-		sqlCommand: sqlInput.getValue(),
-		saveColumns: $("#saveColumns").is(":checked")
-      }
-	var name = "output.csv";
-	FileIO.save(cmd, name);
+    var cmd = {
+      action: "exportResult",
+      sqlCommand: sqlInput.getValue(),
+      saveColumns: $("#saveColumns").is(":checked")
+    }
+    var name = "output.csv";
+    FileIO.save(cmd, name);
   }
 
   var initialize = function() {
