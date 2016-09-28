@@ -50,6 +50,18 @@ limitations under the License.
   bottom: 8px;
 }
 
+#btnSaveSql {
+  position: absolute;
+  left: 150px;
+  bottom: 8px;
+}
+
+#optionSaveColumns {
+  position: absolute;
+  left: 380px;
+  bottom: -5px;
+}
+
 #btnSqlTemplates {
   position: absolute;
   right: 8px;

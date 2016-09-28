@@ -101,6 +101,11 @@
         <div class="card" id="cardSqlInput">
           <textarea id="contentCodeMirror" name="contentCodeMirror" placeholder="Enter SQL here..." i18n-id="placeholder_sql" i18n-attr="placeholder"></textarea>
           <a class="waves-effect waves-light orange darken-1 btn" id="btnExecuteSql" i18n-id="btn_run_sql">Run SQL</a>
+		  <a class="waves-effect waves-light orange darken-1 btn" id="btnSaveSql" i18n-id="btn_save_sql">Save Result as CSV</a>
+		  <p id="optionSaveColumns">
+		  <input type="checkbox" class="filled-in" id="saveColumns" />
+		  <label for="saveColumns">Save Table Header</label>
+		  </p>
           <a class="waves-effect waves-orange btn-flat" id="btnSqlTemplates" i18n-id="btn_templates">Templates</a>
         </div>
         <div class="card table-container" id="cardSqlResult" style="display:none"></div>

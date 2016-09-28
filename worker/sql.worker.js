@@ -87,6 +87,9 @@ var handleCommand = function(data) {
     case "export" : {
       return exportData(data);
     }
+	case "exportResult" : {
+      return exportResult(data);
+    }
     case "exportDB" : {
       return exportDB(data);
     }
@@ -205,6 +208,40 @@ var exportData = function(args) {
 
   var data = new Blob([fullString], {type: 'text/plain'});
   return {blob: data};
+}
+
+var exportResult = function(args) {
+	
+    var sqlResult = db.exec(args.sqlCommand)[0];
+	var entries = sqlResult.values;
+	var columns = sqlResult.columns;
+
+	var csvContent = "";
+	
+	if (args.saveColumns) {		
+		csvContent += columns + "\n";
+	}
+	
+	for (var i of entries) {
+		for (var j of i) {
+			if (!isNaN(j)) {
+				csvContent += j;
+				if (i.indexOf(j) != (i.length - 1)) {
+					csvContent += ",";
+				}
+			} else {
+				csvContent += "\"" + j + "\"";
+				if (i.indexOf(j) != (i.length - 1)) {
+					csvContent += ",";
+				}
+			}
+		}
+		
+		csvContent += "\n";
+	}
+	
+	var data = new Blob([csvContent], {type: 'data:text/csv'});
+	return {blob: data};
 }
 
 var exportDataMapper = function(v) {

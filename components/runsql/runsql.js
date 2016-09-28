@@ -38,6 +38,16 @@ var RunSql = (function() {
       }
     });
   }
+  
+  var saveResult = function() {
+	var cmd = {
+        action: "exportResult",
+		sqlCommand: sqlInput.getValue(),
+		saveColumns: $("#saveColumns").is(":checked")
+      }
+	var name = "output.csv";
+	FileIO.save(cmd, name);
+  }
 
   var initialize = function() {
     if (initialized) {
@@ -57,6 +67,7 @@ var RunSql = (function() {
     });
 
     $("#btnExecuteSql").click(executeSql);
+	$("#btnSaveSql").click(saveResult);
 
     var templates = new PopupMenu(
       ["Select", "SELECT * FROM tableName", "SELECT with WHERE clause", "SELECT (general)"],
