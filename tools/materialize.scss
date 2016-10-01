@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 // Mixins
-@import "../bower_components/materialize/sass/components/prefixer";
+//@import "../bower_components/materialize/sass/components/prefixer";
 @import "../bower_components/materialize/sass/components/mixins";
 @import "../bower_components/materialize/sass/components/color";
 
@@ -29,11 +29,12 @@
 //@import "../bower_components/materialize/sass/components/collapsible";
 //@import "../bower_components/materialize/sass/components/chips";
 //@import "../bower_components/materialize/sass/components/materialbox";
-@import "../bower_components/materialize/sass/components/form";
+@import "../bower_components/materialize/sass/components/forms/forms";
 //@import "../bower_components/materialize/sass/components/table_of_contents";
 //@import "../bower_components/materialize/sass/components/sideNav";
 @import "../bower_components/materialize/sass/components/preloader";
 //@import "../bower_components/materialize/sass/components/slider";
+//@import "../bower_components/materialize/sass/components/carousel";
 //@import "../bower_components/materialize/sass/components/date_picker/default.scss";
 //@import "../bower_components/materialize/sass/components/date_picker/default.date.scss";
 //@import "../bower_components/materialize/sass/components/date_picker/default.time.scss";

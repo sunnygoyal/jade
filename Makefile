@@ -18,7 +18,7 @@
 CLOSURE_JAR := tools/closure_compiler.jar
 $(CLOSURE_JAR):
 	curl -o tools/compiler.zip http://dl.google.com/closure-compiler/compiler-latest.zip
-	unzip -p tools/compiler.zip compiler.jar > $@
+	unzip -Z1 tools/compiler.zip  | grep jar | xargs -I % unzip -p tools/compiler.zip % > $@
 	rm tools/compiler.zip
 
 define COMPILE_JS
@@ -94,12 +94,12 @@ $(eval $(call COMPILE_JS, third_party/sql/sql.js, bower_components/sql.js/js/sql
 $(eval $(call CONCAT_FILES, third_party/jquery/jquery.min.js, bower_components/jquery/dist/jquery.min.js))
 
 # Custom build of materialize library
-materialize: $(addprefix third_party/materialize/,js/materialize.min.js css/materialize.min.css font/roboto LICENSE)
+materialize: $(addprefix third_party/materialize/,js/materialize.min.js css/materialize.min.css fonts/roboto LICENSE)
 
-$(eval $(call COMPILE_JS, third_party/materialize/js/materialize.min.js, $(addprefix bower_components/materialize/js/,jquery.easing.1.3.js velocity.min.js global.js leanModal.js tooltip.js waves.js toasts.js forms.js)))
+$(eval $(call COMPILE_JS, third_party/materialize/js/materialize.min.js, $(addprefix bower_components/materialize/js/,jquery.easing.1.3.js velocity.min.js global.js tooltip.js waves.js toasts.js forms.js)))
 $(eval $(call CONCAT_FILES, third_party/materialize/LICENSE, bower_components/materialize/LICENSE))
 
-third_party/materialize/font/roboto: bower_components/materialize/font/roboto
+third_party/materialize/fonts/roboto: bower_components/materialize/fonts/roboto
 	mkdir -p $(@D)
 	cp -rf $< $@
 
