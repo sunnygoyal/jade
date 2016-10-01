@@ -16,6 +16,8 @@ limitations under the License.
 
 .table-container {
   overflow: auto;
+  /* Add a border raduis somehow fixes the flickering during scroll */
+  border-radius: 2px;
 }
 
 .table-container .header {

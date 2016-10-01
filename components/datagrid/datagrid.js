@@ -177,10 +177,10 @@ function noop () { }
    * Fixes the table head to be always on the top, by translating it approptiately.
    * Called when the table is scrolled.
    */
-  var fixHeader = function(e) {
-    var scroll = $(this).scrollTop();
+  var fixHeader = function(head) {
+    var scroll = this.scrollTop();
     var shadow = Math.min(scroll, 100) / 100;
-    var head = $(this).children().first().css({
+    head.css({
       transform: `translateY(${scroll}px)`,
       boxShadow: `0 0 ${shadow * 4}px rgba(0,0,0,${shadow * .14}), 0 ${shadow * 4}px ${shadow * 8}px rgba(0,0,0,${shadow * .28})`
     });
@@ -441,10 +441,11 @@ function noop () { }
         colState.push([$(this).width(), $(this).hasClass(CLASS_HIDE_COLUMN)]);
       })
     } else {
-      table.empty().unbind("scroll").scroll(fixHeader);
-
       // Add Header
+      table.empty();
       var header = $("<div>").addClass(CLASS_DATAGIRD_HEAD).appendTo(table);
+      table.unbind("scroll").scroll(fixHeader.bind(table, header));
+
 
       for (var i = 0; i < cols; i++) {
         var head = $("<label>").append($("<span/>").text(data.columns[i]).dblclick(headDblClicked)).appendTo(header);
