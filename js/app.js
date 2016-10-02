@@ -161,6 +161,9 @@ var moreOptionsClicked = function(index, subIndex) {
           cmd.type = ["table", "view", "index", "trigger"];
           name = "dbstructure.sql";
           break;
+        case 3: // CSV
+          CSVExport.show();
+          break
       }
       if (!name) {
         return;
@@ -275,7 +278,7 @@ $(function() {
       "menu_reload",
       "title_db_properties",
       null,
-      ["menu_export", "menu_export_tables", "menu_export_db", "menu_export_db_structure"],
+      ["menu_export", "menu_export_tables", "menu_export_db", "menu_export_db_structure", "menu_export_csv"],
       "title_import_sql"
     );
     moreOptions.attachTo($("#app_more_options"));

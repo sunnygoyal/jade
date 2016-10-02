@@ -87,8 +87,8 @@ var handleCommand = function(data) {
     case "export" : {
       return exportData(data);
     }
-    case "exportResult" : {
-      return exportResult(data);
+    case "exportCSV" : {
+      return exportCSV(data);
     }
     case "exportDB" : {
       return exportDB(data);
@@ -210,38 +210,62 @@ var exportData = function(args) {
   return {blob: data};
 }
 
-var exportResult = function(args) {
-	
-  var sqlResult = db.exec(args.sqlCommand)[0];
-  var entries = sqlResult.values;
-  var columns = sqlResult.columns;
+var exportCSV = function(args) {
+  var sep = args.seperator;
+  var enslosingMapper;
+
+  if (args.enclosing == 2) {
+      // Never enclose
+      enslosingMapper = function(v) { return v};
+  } else {
+    var alwaysEnclose = function(v) { return '"' + v.replace(/"/g, '""') + '"'};
+    if (args.enclosing == 1) {
+      // Always enclose
+      enslosingMapper = alwaysEnclose
+    } else {
+      // Enclose when needed
+      enslosingMapper = function(v) { return v.includes('"') || v.includes(sep) ? alwaysEnclose(v) : v};
+    }
+  }
+
+  var valueMapper = function(v) {
+    if (v == null) {
+      return "";
+    } else if (v.blobUrl) {
+      // TODO fetch url
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', v.blobUrl, false);
+      xhr.responseType = 'arraybuffer';
+      xhr.send(null);
+      if (xhr.status != 200) {
+        return "[BLOB]";
+      }
+      return unit8ArrayMapper(new Uint8Array(xhr.response));
+    } else {
+      return v + "";
+    }
+  }
 
   var csvContent = "";
-	
-  if (args.saveColumns) {		
-    csvContent += columns + "\n";
+  if (args.includeHeader) {
+    csvContent = args.data.columns.map(valueMapper).map(enslosingMapper).join(sep) + "\n";
   }
-	
-  for (var i of entries) {
-    for (var j of i) {
-      if (!isNaN(j)) {
-        csvContent += j;
-        if (i.indexOf(j) != (i.length - 1)) {
-          csvContent += ",";
-        }
-      } else {
-        csvContent += "\"" + j + "\"";
-        if (i.indexOf(j) != (i.length - 1)) {
-          csvContent += ",";
-        }
-      }
-    }
-		
-    csvContent += "\n";
+
+  for (var row of args.data.values) {
+    csvContent += row.map(valueMapper).map(enslosingMapper).join(sep) + "\n";
   }
-	
+
   var data = new Blob([csvContent], {type: 'data:text/csv'});
   return {blob: data};
+}
+
+var unit8ArrayMapper = function(v) {
+    var str = "";
+    for (var i = 0; i < v.length; i++) {
+      var hex = v[i].toString(16);
+      str += hex.length < 2 ? "0" + hex : hex;
+    }
+    return "X'" + str + "'";
 }
 
 var exportDataMapper = function(v) {
@@ -250,12 +274,7 @@ var exportDataMapper = function(v) {
   } else if (typeof(v) == "string") {
     return escapeSql(v);
   } else if (v instanceof Uint8Array) {
-    var str = "";
-    for (var i = 0; i < v.length; i++) {
-      var hex = v[i].toString(16);
-      str += hex.length < 2 ? "0" + hex : hex;
-    }
-    return "X'" + str + "'";
+    return unit8ArrayMapper(v);
   } else {
     return v;
   }

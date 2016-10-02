@@ -5,6 +5,8 @@
   "msg_error": {"message": "Error $1"},
   "label_off": {"message": "Off"},
   "label_on": {"message": "On"},
+  "label_yes": {"message": "Yes"},
+  "label_no": {"message": "No"},
 
   "title_tables": {"message": "Tables"},
   "title_views": {"message": "Views"},
@@ -12,7 +14,6 @@
   "title_triggers": {"message": "Triggers"},
 
   "btn_run_sql": {"message": "Run SQL"},
-  "btn_save_sql": {"message": "Save Result as CSV"},
   "placeholder_sql": {"message": "Enter SQL here..."},
   "btn_templates": {"message": "Templates"},
 
@@ -56,6 +57,7 @@
   "menu_open": {"message": "Open"},
   "menu_reload": {"message": "Reload"},
   "menu_export": {"message": "Export"},
+  "menu_export_csv": {"message": "Output as CSV"},
   "menu_export_tables": {"message": "All tables"},
   "menu_export_db": {"message": "Database"},
   "menu_export_db_structure": {"message": "Database structure"},
@@ -67,6 +69,11 @@
 
   "menu_save_db": {"message": "Save DB"},
   "msg_file_saved": {"message": "File saved"},
+
+  "title_export_csv": {"message": "Export output as CSV"},
+  "export_csv_include_header": {"message": "Include column names"},
+  "export_csv_separator": {"message": "Field separator"},
+  "export_csv_enclose_quotes": {"message": "Enclose with double quotes (\")"},
 
   "db_setting_section_versioning": {"message": "Versioning"},
   "db_setting_schema_version": {"message": "Schema version"},

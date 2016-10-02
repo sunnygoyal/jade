@@ -442,7 +442,7 @@ function noop () { }
       })
     } else {
       // Add Header
-      table.empty();
+      table.empty().data("datagrid-data", data);
       var header = $("<div>").addClass(CLASS_DATAGIRD_HEAD).appendTo(table);
       table.unbind("scroll").scroll(fixHeader.bind(table, header));
 

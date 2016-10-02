@@ -122,11 +122,11 @@ h4 {
 
 /** ************* DB Settings ***********/
 
-#db_settings table {
+.popup_with_table table {
   width: auto;
 }
 
-#db_settings td:first-child {
+.popup_with_table td:first-child {
   text-align: right;
   padding: 0 10px;
   line-height: 40px;
@@ -134,12 +134,12 @@ h4 {
   color: #757575;
 }
 
-#db_settings td:last-child {
+.popup_with_table td:last-child {
   padding: 0 4px 0 25px;
   max-width: 30%;
   height: 40px;
 }
-#db_settings td[colspan="2"] {
+.popup_with_table td[colspan="2"] {
   font-weight: bold;
   vertical-align: bottom;
   line-height: inherit;
@@ -147,11 +147,11 @@ h4 {
   color: #333;
 }
 
-#db_settings input[type='text'], #db_settings input[type='number'] {
+.popup_with_table input[type='text'], .popup_with_table input[type='number'] {
   margin:0;
   height: 2rem;
   padding-left: 20px;
 }
-#db_settings td:last-child:not(.combo-box) {
+.popup_with_table td:last-child:not(.combo-box) {
   padding-right: 21px !important;
 }
