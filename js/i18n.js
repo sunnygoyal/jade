@@ -26,7 +26,7 @@ var i18n = (function() {
 
   var locales;
   if (navigator.languages) {
-    locales = navigator.languages;
+    locales = [...navigator.languages];
   } else {
     var locale = navigator.userLanguage || navigator.language;
     if (typeof(locale) == "string") {
@@ -41,6 +41,7 @@ var i18n = (function() {
   if (locales.indexOf("en") < 0) {
     locales.push("en");
   }
+  console.log(locales, typeof locales);
 
   // Load jsons
   var promise = $.when.apply($, locales.map(function(locale, i) {
