@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-chrome.app.runtime.onLaunched.addListener(function() {
+chrome.runtime.onStartup.addListener(function() {
   // Find an unused id.
   // Using an id enables storing the window state, but disables opening multiple windows.
   // To allow opening multiple-instances, we use an unused id every time. This doesn't
   // save the state properly, but at-least the first window has consistent state.
-  var usedIds = chrome.app.window.getAll().map(function(window) {
+  var usedIds = chrome.window.getAll().map(function(window) {
     return window.id;
   });
   var id = 0;
@@ -37,5 +37,5 @@ chrome.app.runtime.onLaunched.addListener(function() {
       state: "maximized",
 	  id: idStr
   };
-  chrome.app.window.create("index.html", params);
+  chrome.window.create("index.html", params);
 });
