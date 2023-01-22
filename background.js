@@ -39,3 +39,7 @@ chrome.runtime.onStartup.addListener(function() {
   };
   chrome.window.create("index.html", params);
 });
+
+chrome.action.onClicked.addListener( () => {
+   chrome.tabs.create({url:'index.html'});
+});
