@@ -15,5 +15,5 @@
   "name": "JAvascript based Database Editor",
   "short_name": "JADE",
   "permissions": [ "storage", "tabs" ],
-  "version": "1.1"
+  "version": "2.0"
 }
