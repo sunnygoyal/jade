@@ -105,6 +105,6 @@ third_party/materialize/fonts/roboto: bower_components/materialize/fonts/roboto
 
 third_party/materialize/css/materialize.min.css: tools/materialize.scss
 	mkdir -p $(@D)
-	sass --sourcemap=none --style=compressed $< > $@
+	sass --no-source-map --style=compressed $< > $@
 
 
