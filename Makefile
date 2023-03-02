@@ -50,6 +50,7 @@ web_ui: third_party_deps out/worker/sql.worker.js out/deps/app.js out/index.html
 	cp -r icons out/
 	cp -r _locales out/
 	cp -r third_party out/
+	cp -r material-icons out/
 
 $(eval $(call COMPILE_JS, out/worker/sql.worker.js, worker/where.peg.js worker/import_sql.js worker/mimetypes.js worker/sql.worker.js))
 $(eval $(call COMPILE_JS, out/deps/app.js, js/*.js components/*/*.js))
@@ -71,15 +72,7 @@ clean:
 	rm -rf out
 
 # All the third party dependencies
-third_party_deps: material_icons codemirror third_party/sql/sql.js third_party/jquery/jquery.min.js materialize
-
-# Material design icons
-MATERIAL_ICON := $(addprefix third_party/icons/,MaterialIcons-Regular.ttf MaterialIcons-Regular.eot MaterialIcons-Regular.woff MaterialIcons-Regular.woff2)
-material_icons: $(MATERIAL_ICON)
-
-$(MATERIAL_ICON):
-	mkdir -p $(@D)
-	curl -o $@ https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/$(@F)
+third_party_deps: codemirror third_party/sql/sql.js third_party/jquery/jquery.min.js materialize
 
 # Codemirror
 codemirror: third_party/codemirror/codemirror.css third_party/codemirror/codemirror-compressed.js third_party/codemirror/LICENSE
