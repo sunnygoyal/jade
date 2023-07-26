@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "materialize": "master",
+    "materialize": "v0.97.7",
     "sql.js": "https://github.com/sunnygoyal/sql.js.git",
     "codemirror": "https://github.com/codemirror/CodeMirror.git#~5.5.0",
     "jquery": ">=3.1.1"

@@ -1,8 +1,6 @@
 {
-  "app": {
-    "background": {
-      "scripts": [ "background.js" ]
-    }
+  "background": {
+    "service_worker": "background.js"
   },
   "default_locale": "en",
   "description": "A GUI client for local SQLite databases",
@@ -12,9 +10,10 @@
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png"
   },
-  "manifest_version": 2,
+  "action": {},
+  "manifest_version": 3,
   "name": "JAvascript based Database Editor",
   "short_name": "JADE",
-  "permissions": [ "storage", {"fileSystem": ["write"]}],
-  "version": "1.1"
+  "permissions": [ "storage", "tabs" ],
+  "version": "2.0"
 }
